@@ -55,9 +55,15 @@ class User
      */
     private $addresses;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Cart::class, mappedBy="user_id", orphanRemoval=true)
+     */
+    private $carts;
+
     public function __construct()
     {
         $this->addresses = new ArrayCollection();
+        $this->carts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -162,6 +168,37 @@ class User
             // set the owning side to null (unless already changed)
             if ($adress->getUserId() === $this) {
                 $adress->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Cart[]
+     */
+    public function getCarts(): Collection
+    {
+        return $this->carts;
+    }
+
+    public function addCart(Cart $cart): self
+    {
+        if (!$this->carts->contains($cart)) {
+            $this->carts[] = $cart;
+            $cart->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCart(Cart $cart): self
+    {
+        if ($this->carts->contains($cart)) {
+            $this->carts->removeElement($cart);
+            // set the owning side to null (unless already changed)
+            if ($cart->getUserId() === $this) {
+                $cart->setUserId(null);
             }
         }
 
