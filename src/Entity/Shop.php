@@ -35,17 +35,17 @@ class Shop
     private $address;
 
     /**
-     * @ORM\OneToMany(targetEntity=Shopper::class, mappedBy="shop_id")
+     * @ORM\OneToMany(targetEntity=Shopper::class, mappedBy="shop")
      */
     private $shoppers;
 
     /**
-     * @ORM\OneToMany(targetEntity=ProductCatalog::class, mappedBy="shop_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=ProductCatalog::class, mappedBy="shop", orphanRemoval=true)
      */
     private $productCatalogs;
 
     /**
-     * @ORM\OneToMany(targetEntity=Cart::class, mappedBy="shop_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Cart::class, mappedBy="shop", orphanRemoval=true)
      */
     private $carts;
 

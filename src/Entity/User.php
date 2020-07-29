@@ -51,12 +51,12 @@ class User
     private $date_updated;
 
     /**
-     * @ORM\OneToMany(targetEntity=Address::class, mappedBy="user_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Address::class, mappedBy="user", orphanRemoval=true)
      */
     private $addresses;
 
     /**
-     * @ORM\OneToMany(targetEntity=Cart::class, mappedBy="user_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Cart::class, mappedBy="user", orphanRemoval=true)
      */
     private $carts;
 
@@ -151,11 +151,11 @@ class User
         return $this->addresses;
     }
 
-    public function addAddress(Address $adress): self
+    public function addAddress(Address $address): self
     {
-        if (!$this->adresses->contains($adress)) {
-            $this->adresses[] = $adress;
-            $adress->setUserId($this);
+        if (!$this->addresses->contains($address)) {
+            $this->addresses[] = $address;
+            $address->setUserId($this);
         }
 
         return $this;
@@ -163,11 +163,11 @@ class User
 
     public function removeAddress(Address $address): self
     {
-        if ($this->addresses->contains($adress)) {
-            $this->addresses->removeElement($adress);
+        if ($this->addresses->contains($address)) {
+            $this->addresses->removeElement($address);
             // set the owning side to null (unless already changed)
-            if ($adress->getUserId() === $this) {
-                $adress->setUserId(null);
+            if ($address->getUserId() === $this) {
+                $address->setUserId(null);
             }
         }
 

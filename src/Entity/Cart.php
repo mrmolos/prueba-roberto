@@ -22,19 +22,19 @@ class Cart
     /**
      * @ORM\ManyToOne(targetEntity=Shopper::class, inversedBy="carts")
      */
-    private $shopper_id;
+    private $shopper;
 
     /**
      * @ORM\ManyToOne(targetEntity=Shop::class, inversedBy="carts")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $shop_id;
+    private $shop;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="carts")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user_id;
+    private $user;
 
     /**
      * @ORM\Column(type="datetime")
@@ -60,10 +60,10 @@ class Cart
      * @ORM\ManyToOne(targetEntity=Address::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $address_id;
+    private $address;
 
     /**
-     * @ORM\OneToMany(targetEntity=CartProduct::class, mappedBy="Cart_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=CartProduct::class, mappedBy="Cart", orphanRemoval=true)
      */
     private $cartProducts;
 
@@ -89,36 +89,36 @@ class Cart
 
     public function getShopperId(): ?Shopper
     {
-        return $this->shopper_id;
+        return $this->shopper;
     }
 
-    public function setShopperId(?Shopper $shopper_id): self
+    public function setShopperId(?Shopper $shopper): self
     {
-        $this->shopper_id = $shopper_id;
+        $this->shopper = $shopper;
 
         return $this;
     }
 
     public function getShopId(): ?Shop
     {
-        return $this->shop_id;
+        return $this->shop;
     }
 
-    public function setShopId(?Shop $shop_id): self
+    public function setShopId(?Shop $shop): self
     {
-        $this->shop_id = $shop_id;
+        $this->shop = $shop;
 
         return $this;
     }
 
     public function getUserId(): ?User
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(?User $user_id): self
+    public function setUserId(?User $user): self
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }
@@ -173,12 +173,12 @@ class Cart
 
     public function getAddressId(): ?Address
     {
-        return $this->address_id;
+        return $this->address;
     }
 
-    public function setAddressId(?Address $address_id): self
+    public function setAddressId(?Address $address): self
     {
-        $this->address_id = $address_id;
+        $this->address_id = $address;
 
         return $this;
     }

@@ -36,7 +36,7 @@ class ProductCatalog
      * @ORM\ManyToOne(targetEntity=Shop::class, inversedBy="productCatalogs")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $shop_id;
+    private $shop;
 
     public function getId(): ?int
     {
@@ -81,12 +81,12 @@ class ProductCatalog
 
     public function getShopId(): ?Shop
     {
-        return $this->shop_id;
+        return $this->shop;
     }
 
-    public function setShopId(?Shop $shop_id): self
+    public function setShopId(?Shop $shop): self
     {
-        $this->shop_id = $shop_id;
+        $this->shop = $shop;
 
         return $this;
     }

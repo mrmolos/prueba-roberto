@@ -5,9 +5,16 @@ namespace App\Controller;
 
 use App\Entity\User;
 
+use LogicException;
+use PhpParser\Node\Expr\New_;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
+
 
 
 class UserController extends AbstractController
@@ -15,12 +22,16 @@ class UserController extends AbstractController
 
     //CONTROLADOR USER CODIGO PRUEBA
     /**
-     * @Route("/", name="userpage")
+     * @Route("/new", name="userpage", methods={"POST"})
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function show()
+    public function show(Request $request)
     {
+        $data = json_decode($request->getContent(), true);
+        $nombre = $data['nombre'];
 
-        return new Response('Hola desde el controlador');
+        return new JsonResponse(['RESULT' =>'OK', 'data' => $nombre]);
     }
 
 
