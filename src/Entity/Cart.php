@@ -39,22 +39,22 @@ class Cart
     /**
      * @ORM\Column(type="datetime")
      */
-    private $delivery_start;
+    private ?\DateTimeInterface $delivery_start;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $delivery_end;
+    private ?\DateTimeInterface $delivery_end;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $status;
+    private ?string $status;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $total;
+    private ?float $total;
 
     /**
      * @ORM\ManyToOne(targetEntity=Address::class)
@@ -65,17 +65,17 @@ class Cart
     /**
      * @ORM\OneToMany(targetEntity=CartProduct::class, mappedBy="Cart", orphanRemoval=true)
      */
-    private $cartProducts;
+    private ArrayCollection $cartProducts;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $buy_date;
+    private ?\DateTimeInterface $buy_date;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $delivery_date;
+    private ?\DateTimeInterface $delivery_date;
 
     public function __construct()
     {
