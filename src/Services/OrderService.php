@@ -4,7 +4,7 @@
 namespace App\Services;
 
 
-use App\Entity\Address;
+
 use App\Entity\Cart;
 use App\Entity\CartProduct;
 
@@ -21,7 +21,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use \DateTime;
 
 
-use Exception;
+
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
@@ -33,7 +33,8 @@ class OrderService
     protected ShopperRepository $shopperRepository;
     protected CartProductRepository $cartProductRepository;
     protected ProductCatalogRepository $productCatalogRepository;
-    protected EntityManagerInterface $entitymanager;
+    protected EntityManagerInterface $entityManager;
+
 
 
     public function __construct(UserRepository $userRepository,
@@ -51,7 +52,7 @@ class OrderService
         $this->shopperRepository = $shopperRepository;
         $this->cartProductRepository = $cartProductRepository;
         $this->productCatalogRepository = $productCatalogRepository;
-        $this->entitymanager = $entityManager;
+        $this->entityManager = $entityManager;
 
     }
 
@@ -121,23 +122,37 @@ class OrderService
         }
 
 
-
-
+        //Obtener total para el carro
         $total = $this->getTotal($lineOrder);
         $cart->setTotal($total);
 
-        /*if ($cart){
-            $this->entitymanager->persist($cart);
-            $this->entitymanager->flush();
-        }*/
 
 
+        if ($cart){
+            //Cambiar estado del shopper
+            $shopper->setStatus('WORKING');
+            $this->entityManager->persist($shopper);
 
+            $this->entityManager->persist($cart);
+            $this->entityManager->flush();
+            $message = [
+                'Status' => 'OK',
+                'Message' => 'Compra realizada con exito'
+            ];
+        } else {
+            $message =[
+                'Status' => 'FAIL',
+                'Message' => 'Hubo un problema'
+            ];
+        }
 
+        //Volcar líneas de carro en la base de datos
+        foreach ($lines as $line){
+            $this->entityManager->persist($line);
+            $this->entityManager->flush();
+        }
 
-
-
-        return $cart;
+        return $message;
 
     }
 
@@ -151,8 +166,6 @@ class OrderService
     }
 
 
-
-
     /*
      Futuras funciones:
     1-Obtener shopper en función del status
@@ -161,7 +174,7 @@ class OrderService
     4-Funcion para hacer subida a bd
     5-Validaciones y estructuras de control
     6-Return a la base de datos
+    7-Volcar con try catch para poder gestionar un posible error
      */
-
 
 }

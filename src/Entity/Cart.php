@@ -68,9 +68,10 @@ class Cart
     private Address $address;
 
     /**
+     * @var ArrayCollection[]
      * @ORM\OneToMany(targetEntity=CartProduct::class, mappedBy="Cart", orphanRemoval=true)
      */
-    private ArrayCollection $cartProducts;
+    private $cartProducts;
 
     /**
      * @ORM\Column(type="datetime")

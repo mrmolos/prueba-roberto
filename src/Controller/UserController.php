@@ -27,9 +27,9 @@ class UserController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
 
-        $cart=$order->createOrder($data);
+        $response=$order->createOrder($data);
 
-
+/*
         $cartData = [
           'user' => $cart->getUserId(),
           'direccion' => $cart->getAddressId(),
@@ -41,11 +41,12 @@ class UserController extends AbstractController
             'status' => $cart->getStatus(),
             'total compra' => $cart->getTotal()
         ];
+        $direccionprueba = $cart->getAddressId()->getAddress();
+        $response = ['nombre de la calle' => $direccionprueba];*/
 
 
 
-
-       return new JsonResponse($cartData);
+       return new JsonResponse($response);
 
     }
 
