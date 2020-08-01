@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\AddressRepository;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,7 +15,7 @@ class Address
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -28,10 +28,11 @@ class Address
     private ?string $postal_number;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="addresses")
+     * @var User
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="user")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private User $user;
 
     public function getId(): ?int
     {
@@ -67,7 +68,11 @@ class Address
         return $this->user;
     }
 
-    public function setUserId(?User $user): self
+    /**
+     * @param User $user
+     * @return $this
+     */
+    public function setUserId($user): self
     {
         $this->user = $user;
 

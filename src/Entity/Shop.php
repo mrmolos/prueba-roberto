@@ -17,34 +17,37 @@ class Shop
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private ?string $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $description;
+    private ?string $description;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $address;
+    private ?string $address;
 
     /**
+     * @var ArrayCollection[]
      * @ORM\OneToMany(targetEntity=Shopper::class, mappedBy="shop")
      */
     private $shoppers;
 
     /**
+     * @var ArrayCollection[]
      * @ORM\OneToMany(targetEntity=ProductCatalog::class, mappedBy="shop", orphanRemoval=true)
      */
     private $productCatalogs;
 
     /**
+     * @var ArrayCollection[]
      * @ORM\OneToMany(targetEntity=Cart::class, mappedBy="shop", orphanRemoval=true)
      */
     private $carts;

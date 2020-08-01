@@ -7,6 +7,7 @@ use App\Entity\ProductCatalog;
 use App\Entity\Shop;
 use App\Entity\Shopper;
 use App\Entity\User;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -25,8 +26,8 @@ class AppFixtures extends Fixture
                 ->setSurname('surname ' . $i)
                 ->setEmail('email' . $i . '@gmail.com')
                 ->setPhone('11223' . $i)
-                ->setDateCreated(new \DateTime('now'))
-                ->setDateUpdated(new \DateTime('now'));
+                ->setDateCreated(new DateTime('now'))
+                ->setDateUpdated(new DateTime('now'));
 
 
             $address = new Address();

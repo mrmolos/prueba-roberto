@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CartRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,34 +18,37 @@ class Cart
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Shopper::class, inversedBy="carts")
+     * @var Shopper
+     * @ORM\ManyToOne(targetEntity=Shopper::class, inversedBy="shopper")
      */
-    private $shopper;
+    private Shopper $shopper;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Shop::class, inversedBy="carts")
+     * @var Shop
+     * @ORM\ManyToOne(targetEntity=Shop::class, inversedBy="shop")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $shop;
+    private Shop $shop;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="carts")
+     * @var User
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="user")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private User $user;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private ?\DateTimeInterface $delivery_start;
+    private ?DateTimeInterface $delivery_start;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private ?\DateTimeInterface $delivery_end;
+    private ?DateTimeInterface $delivery_end;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -57,10 +61,11 @@ class Cart
     private ?float $total;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Address::class)
+     * @var Address
+     * @ORM\ManyToOne(targetEntity=Address::class, inversedBy="address")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $address;
+    private Address $address;
 
     /**
      * @ORM\OneToMany(targetEntity=CartProduct::class, mappedBy="Cart", orphanRemoval=true)
@@ -70,12 +75,16 @@ class Cart
     /**
      * @ORM\Column(type="datetime")
      */
-    private ?\DateTimeInterface $buy_date;
+    private ?DateTimeInterface $buy_date;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private ?\DateTimeInterface $delivery_date;
+    private ?DateTimeInterface $delivery_date;
+    /**
+     * @var Address|null
+     */
+
 
     public function __construct()
     {
@@ -92,7 +101,11 @@ class Cart
         return $this->shopper;
     }
 
-    public function setShopperId(?Shopper $shopper): self
+    /**
+     * @param Shopper $shopper
+     * @return $this
+     */
+    public function setShopperId($shopper): self
     {
         $this->shopper = $shopper;
 
@@ -104,7 +117,11 @@ class Cart
         return $this->shop;
     }
 
-    public function setShopId(?Shop $shop): self
+    /**
+     * @param Shop $shop
+     * @return $this
+     */
+    public function setShopId($shop): self
     {
         $this->shop = $shop;
 
@@ -116,31 +133,35 @@ class Cart
         return $this->user;
     }
 
-    public function setUserId(?User $user): self
+    /**
+     * @param User $user
+     * @return $this
+     */
+    public function setUserId($user): self
     {
         $this->user = $user;
 
         return $this;
     }
 
-    public function getDeliveryStart(): ?\DateTimeInterface
+    public function getDeliveryStart(): ?DateTimeInterface
     {
         return $this->delivery_start;
     }
 
-    public function setDeliveryStart(\DateTimeInterface $delivery_start): self
+    public function setDeliveryStart(DateTimeInterface $delivery_start): self
     {
         $this->delivery_start = $delivery_start;
 
         return $this;
     }
 
-    public function getDeliveryEnd(): ?\DateTimeInterface
+    public function getDeliveryEnd(): ?DateTimeInterface
     {
         return $this->delivery_end;
     }
 
-    public function setDeliveryEnd(\DateTimeInterface $delivery_end): self
+    public function setDeliveryEnd(DateTimeInterface $delivery_end): self
     {
         $this->delivery_end = $delivery_end;
 
@@ -176,9 +197,13 @@ class Cart
         return $this->address;
     }
 
-    public function setAddressId(?Address $address): self
+    /**
+     * @param Address$address
+     * @return $this
+     */
+    public function setAddressId($address): self
     {
-        $this->address_id = $address;
+        $this->address = $address;
 
         return $this;
     }
@@ -214,24 +239,24 @@ class Cart
         return $this;
     }
 
-    public function getBuyDate(): ?\DateTimeInterface
+    public function getBuyDate(): ?DateTimeInterface
     {
         return $this->buy_date;
     }
 
-    public function setBuyDate(\DateTimeInterface $buy_date): self
+    public function setBuyDate(DateTimeInterface $buy_date): self
     {
         $this->buy_date = $buy_date;
 
         return $this;
     }
 
-    public function getDeliveryDate(): ?\DateTimeInterface
+    public function getDeliveryDate(): ?DateTimeInterface
     {
         return $this->delivery_date;
     }
 
-    public function setDeliveryDate(\DateTimeInterface $delivery_date): self
+    public function setDeliveryDate(DateTimeInterface $delivery_date): self
     {
         $this->delivery_date = $delivery_date;
 

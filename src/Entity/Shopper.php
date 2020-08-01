@@ -17,25 +17,27 @@ class Shopper
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private ?string $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $status;
+    private ?string $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Shop::class, inversedBy="shoppers")
+     * @var Shop
+     * @ORM\ManyToOne(targetEntity=Shop::class, inversedBy="shop")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $shop;
+    private Shop $shop;
 
     /**
+     * @var ArrayCollection[]
      * @ORM\OneToMany(targetEntity=Cart::class, mappedBy="shopper")
      */
     private $carts;
@@ -79,7 +81,11 @@ class Shopper
         return $this->shop;
     }
 
-    public function setShopId(?Shop $shop): self
+    /**
+     * @param Shop $shop
+     * @return $this
+     */
+    public function setShopId($shop): self
     {
         $this->shop = $shop;
 

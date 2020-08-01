@@ -15,24 +15,26 @@ class CartProduct
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $quantity;
+    private ?int $quantity;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Cart::class, inversedBy="cartProducts")
+     * @var Cart
+     * @ORM\ManyToOne(targetEntity=Cart::class, inversedBy="cart")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Cart;
+    private Cart $Cart;
 
     /**
-     * @ORM\ManyToOne(targetEntity=ProductCatalog::class)
+     * @var ProductCatalog
+     * @ORM\ManyToOne(targetEntity=ProductCatalog::class, inversedBy="ProductCatalog")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $product;
+    private ProductCatalog $product;
 
     public function getId(): ?int
     {
@@ -56,7 +58,11 @@ class CartProduct
         return $this->Cart;
     }
 
-    public function setCartId(?Cart $Cart): self
+    /**
+     * @param Cart $Cart
+     * @return $this
+     */
+    public function setCartId($Cart): self
     {
         $this->Cart = $Cart;
 
@@ -68,7 +74,11 @@ class CartProduct
         return $this->product;
     }
 
-    public function setProductId(?ProductCatalog $product): self
+    /**
+     * @param ProductCatalog $product
+     * @return $this
+     */
+    public function setProductId( $product): self
     {
         $this->product = $product;
 

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,44 +19,46 @@ class User
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private ?string $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $surname;
+    private ?string $surname;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $email;
+    private ?string $email;
 
     /**
      * @ORM\Column(type="string", length=15)
      */
-    private $phone;
+    private ?string $phone;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date_created;
+    private ?DateTimeInterface $date_created;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date_updated;
+    private ?DateTimeInterface $date_updated;
 
     /**
+     * @var Collection | Address[]
      * @ORM\OneToMany(targetEntity=Address::class, mappedBy="user", orphanRemoval=true)
      */
     private $addresses;
 
     /**
+     * @var Collection | Cart[]
      * @ORM\OneToMany(targetEntity=Cart::class, mappedBy="user", orphanRemoval=true)
      */
     private $carts;
@@ -119,24 +122,24 @@ class User
         return $this;
     }
 
-    public function getDateCreated(): ?\DateTimeInterface
+    public function getDateCreated(): ?DateTimeInterface
     {
         return $this->date_created;
     }
 
-    public function setDateCreated(\DateTimeInterface $date_created): self
+    public function setDateCreated(DateTimeInterface $date_created): self
     {
         $this->date_created = $date_created;
 
         return $this;
     }
 
-    public function getDateUpdated(): ?\DateTimeInterface
+    public function getDateUpdated(): ?DateTimeInterface
     {
         return $this->date_updated;
     }
 
-    public function setDateUpdated(\DateTimeInterface $date_updated): self
+    public function setDateUpdated(DateTimeInterface $date_updated): self
     {
         $this->date_updated = $date_updated;
 

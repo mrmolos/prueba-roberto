@@ -15,28 +15,29 @@ class ProductCatalog
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private ?string $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $description;
+    private ?string $description;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $price;
+    private ?float $price;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Shop::class, inversedBy="productCatalogs")
+     * @var Shop
+     * @ORM\ManyToOne(targetEntity=Shop::class, inversedBy="shop")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $shop;
+    private Shop $shop;
 
     public function getId(): ?int
     {
@@ -84,7 +85,11 @@ class ProductCatalog
         return $this->shop;
     }
 
-    public function setShopId(?Shop $shop): self
+    /**
+     * @param Shop $shop
+     * @return $this
+     */
+    public function setShopId( $shop): self
     {
         $this->shop = $shop;
 
