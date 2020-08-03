@@ -35,8 +35,6 @@ class OrderService
     protected ProductCatalogRepository $productCatalogRepository;
     protected EntityManagerInterface $entityManager;
 
-
-
     public function __construct(UserRepository $userRepository,
                                 AddressRepository $addressRepository,
                                 ShopRepository $shopRepository,
