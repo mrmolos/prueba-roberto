@@ -15,9 +15,7 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        // $product = new Product();
-        // $manager->persist($product);
-
+        
         //Usuarios y direcciones
         for ($i=1; $i<4; $i++) {
 
@@ -33,7 +31,7 @@ class AppFixtures extends Fixture
             $address = new Address();
             $address->setAddress('Sesame Street, ' . $i)
                 ->setPostalNumber('28470')
-                ->setUserId($user);
+                ->setUser($user);
 
             $manager->persist($user);
             $manager->persist($address);
@@ -41,7 +39,7 @@ class AppFixtures extends Fixture
         }
 
             //Tiendas, productos y shoppers
-            //El shopper va asociado a una tienda
+            //El shopper va asociado a una única tienda
             $shops = ['lidl', 'carrefour', 'alcampo'];
             $shoppers = ['fer', 'alejo', 'miguel'];
 
@@ -49,12 +47,12 @@ class AppFixtures extends Fixture
                 $shop = new Shop();
                 $shop->setName($shops[$i-1])
                     ->setAddress('address ' . $i)
-                    ->setDescription('Descripcion de la tienda');
+                    ->setDescription('Descripcion de la tienda ' . $i);
 
                 $shopper = new Shopper();
                 $shopper->setName($shoppers[$i-1])
                     ->setStatus('STOPPED')
-                    ->setShopId($shop);
+                    ->setShop($shop);
 
                 $manager->persist($shop);
                 $manager->persist($shopper);
@@ -66,17 +64,16 @@ class AppFixtures extends Fixture
                     'patatas' => 4.8,
                     'pasta' => 2.60
                 ];
-                foreach ($products as $productname => $price){
+                foreach ($products as $productName => $price){
                     $product = new ProductCatalog();
-                    $product->setName($productname)
+                    $product->setName($productName)
                         ->setDescription('Descripcion del producto')
                         ->setPrice($price)
-                        ->setShopId($shop);
+                        ->setShop($shop);
 
                     $manager->persist($product);
                 }
             }
-
 
         $manager->flush();
 

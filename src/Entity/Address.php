@@ -63,7 +63,7 @@ class Address
         return $this;
     }
 
-    public function getUserId(): ?User
+    public function getUser(): ?User
     {
         return $this->user;
     }
@@ -72,7 +72,7 @@ class Address
      * @param User $user
      * @return $this
      */
-    public function setUserId($user): self
+    public function setUser($user): self
     {
         $this->user = $user;
 

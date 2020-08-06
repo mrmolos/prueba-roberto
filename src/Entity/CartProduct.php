@@ -27,7 +27,7 @@ class CartProduct
      * @ORM\ManyToOne(targetEntity=Cart::class, inversedBy="cart")
      * @ORM\JoinColumn(nullable=false)
      */
-    private Cart $Cart;
+    private Cart $cart;
 
     /**
      * @var ProductCatalog
@@ -53,23 +53,23 @@ class CartProduct
         return $this;
     }
 
-    public function getCartId(): ?Cart
+    public function getCart(): ?Cart
     {
-        return $this->Cart;
+        return $this->cart;
     }
 
     /**
      * @param Cart $Cart
      * @return $this
      */
-    public function setCartId($Cart): self
+    public function setCart($Cart): self
     {
-        $this->Cart = $Cart;
+        $this->cart = $Cart;
 
         return $this;
     }
 
-    public function getProductId(): ?ProductCatalog
+    public function getProduct(): ?ProductCatalog
     {
         return $this->product;
     }
@@ -78,7 +78,7 @@ class CartProduct
      * @param ProductCatalog $product
      * @return $this
      */
-    public function setProductId( $product): self
+    public function setProduct($product): self
     {
         $this->product = $product;
 

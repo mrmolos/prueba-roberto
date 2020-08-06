@@ -158,7 +158,7 @@ class User
     {
         if (!$this->addresses->contains($address)) {
             $this->addresses[] = $address;
-            $address->setUserId($this);
+            $address->setUser($this);
         }
 
         return $this;
@@ -169,8 +169,8 @@ class User
         if ($this->addresses->contains($address)) {
             $this->addresses->removeElement($address);
             // set the owning side to null (unless already changed)
-            if ($address->getUserId() === $this) {
-                $address->setUserId(null);
+            if ($address->getUser() === $this) {
+                $address->setUser(null);
             }
         }
 
@@ -189,7 +189,7 @@ class User
     {
         if (!$this->carts->contains($cart)) {
             $this->carts[] = $cart;
-            $cart->setUserId($this);
+            $cart->setUser($this);
         }
 
         return $this;
@@ -200,8 +200,8 @@ class User
         if ($this->carts->contains($cart)) {
             $this->carts->removeElement($cart);
             // set the owning side to null (unless already changed)
-            if ($cart->getUserId() === $this) {
-                $cart->setUserId(null);
+            if ($cart->getUser() === $this) {
+                $cart->setUser(null);
             }
         }
 

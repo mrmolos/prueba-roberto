@@ -80,7 +80,7 @@ class ProductCatalog
         return $this;
     }
 
-    public function getShopId(): ?Shop
+    public function getShop(): ?Shop
     {
         return $this->shop;
     }
@@ -89,7 +89,7 @@ class ProductCatalog
      * @param Shop $shop
      * @return $this
      */
-    public function setShopId( $shop): self
+    public function setShop( $shop): self
     {
         $this->shop = $shop;
 

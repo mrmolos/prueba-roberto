@@ -112,7 +112,7 @@ class Shop
     {
         if (!$this->shoppers->contains($shopper)) {
             $this->shoppers[] = $shopper;
-            $shopper->setShopId($this);
+            $shopper->setShop($this);
         }
 
         return $this;
@@ -123,8 +123,8 @@ class Shop
         if ($this->shoppers->contains($shopper)) {
             $this->shoppers->removeElement($shopper);
             // set the owning side to null (unless already changed)
-            if ($shopper->getShopId() === $this) {
-                $shopper->setShopId(null);
+            if ($shopper->getShop() === $this) {
+                $shopper->setShop(null);
             }
         }
 
@@ -174,7 +174,7 @@ class Shop
     {
         if (!$this->carts->contains($cart)) {
             $this->carts[] = $cart;
-            $cart->setShopId($this);
+            $cart->setShop($this);
         }
 
         return $this;
@@ -185,8 +185,8 @@ class Shop
         if ($this->carts->contains($cart)) {
             $this->carts->removeElement($cart);
             // set the owning side to null (unless already changed)
-            if ($cart->getShopId() === $this) {
-                $cart->setShopId(null);
+            if ($cart->getShop() === $this) {
+                $cart->setShop(null);
             }
         }
 

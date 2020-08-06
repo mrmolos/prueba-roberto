@@ -97,7 +97,7 @@ class Cart
         return $this->id;
     }
 
-    public function getShopperId(): ?Shopper
+    public function getShopper(): ?Shopper
     {
         return $this->shopper;
     }
@@ -106,14 +106,14 @@ class Cart
      * @param Shopper $shopper
      * @return $this
      */
-    public function setShopperId($shopper): self
+    public function setShopper($shopper): self
     {
         $this->shopper = $shopper;
 
         return $this;
     }
 
-    public function getShopId(): ?Shop
+    public function getShop(): ?Shop
     {
         return $this->shop;
     }
@@ -122,14 +122,14 @@ class Cart
      * @param Shop $shop
      * @return $this
      */
-    public function setShopId($shop): self
+    public function setShop($shop): self
     {
         $this->shop = $shop;
 
         return $this;
     }
 
-    public function getUserId(): ?User
+    public function getUser(): ?User
     {
         return $this->user;
     }
@@ -138,7 +138,7 @@ class Cart
      * @param User $user
      * @return $this
      */
-    public function setUserId($user): self
+    public function setUser($user): self
     {
         $this->user = $user;
 
@@ -193,7 +193,7 @@ class Cart
         return $this;
     }
 
-    public function getAddressId(): ?Address
+    public function getAddress(): ?Address
     {
         return $this->address;
     }
@@ -202,7 +202,7 @@ class Cart
      * @param Address$address
      * @return $this
      */
-    public function setAddressId($address): self
+    public function setAddress($address): self
     {
         $this->address = $address;
 
@@ -221,7 +221,7 @@ class Cart
     {
         if (!$this->cartProducts->contains($cartProduct)) {
             $this->cartProducts[] = $cartProduct;
-            $cartProduct->setCartId($this);
+            $cartProduct->setCart($this);
         }
 
         return $this;
@@ -232,8 +232,8 @@ class Cart
         if ($this->cartProducts->contains($cartProduct)) {
             $this->cartProducts->removeElement($cartProduct);
             // set the owning side to null (unless already changed)
-            if ($cartProduct->getCartId() === $this) {
-                $cartProduct->setCartId(null);
+            if ($cartProduct->getCart() === $this) {
+                $cartProduct->setCart(null);
             }
         }
 

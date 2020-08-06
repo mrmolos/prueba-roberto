@@ -3,29 +3,20 @@
 
 namespace App\Services;
 
-
-
-
 use App\Repository\AddressRepository;
 use App\Repository\CartProductRepository;
 use App\Repository\ShopperRepository;
 use App\Repository\ShopRepository;
-use App\Repository\UserRepository;
 use App\Repository\ProductCatalogRepository;
 use App\Repository\CartRepository;
 
 use Doctrine\ORM\EntityManagerInterface;
-
-
-
-
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ShopperService
 {
     protected AddressRepository $addressRepository;
-    protected UserRepository $userRepository;
     protected ShopRepository $shopRepository;
     protected ShopperRepository $shopperRepository;
     protected CartProductRepository $cartProductRepository;
@@ -33,8 +24,7 @@ class ShopperService
     protected CartRepository $cartRepository;
     protected EntityManagerInterface $entityManager;
 
-    public function __construct(UserRepository $userRepository,
-                                AddressRepository $addressRepository,
+    public function __construct(AddressRepository $addressRepository,
                                 ShopRepository $shopRepository,
                                 ShopperRepository $shopperRepository,
                                 CartProductRepository $cartProductRepository,
@@ -44,25 +34,24 @@ class ShopperService
     )
     {
         $this->addressRepository = $addressRepository;
-        $this->userRepository = $userRepository;
         $this->shopRepository = $shopRepository;
         $this->shopperRepository = $shopperRepository;
         $this->cartProductRepository = $cartProductRepository;
         $this->productCatalogRepository = $productCatalogRepository;
         $this->entityManager = $entityManager;
         $this->cartRepository = $cartRepository;
-
     }
 
 
-    public function getOrder($shop_id, $shopper_id){
-        //Obtengo tienda. Si no existe manda error
+    public function getOrder($shop_id, $shopper_id)
+    {
+        //Obtener tienda
         $shop = $this->shopRepository->find($shop_id);
         if(!$shop){
             throw new NotFoundHttpException("SHOP NOT FOUND");
         }
 
-        //Obtengo el shopper. Si no existe manda error
+        //Obtener shopper
         $shopper = $this->shopperRepository->find($shopper_id);
         if(!$shopper){
             throw new NotFoundHttpException("SHOPPER NOT FOUND");
@@ -74,33 +63,29 @@ class ShopperService
             'shopper' =>$shopper->getId(),
             'shop' => $shop->getId()
         ]);
-        //Si no hay carros manda error
+
         if(!$cart){
             throw new NotFoundHttpException("CART NOT FOUND");
         }
 
         //Obtener líneas de carro
-        $lines = $this->cartProductRepository->findBy(['Cart' => $cart]);
+        $lines = $this->cartProductRepository->findBy(['cart' => $cart]);
 
-        //Ya tenemos todos los datos necesarios desde la bd. Ahora solo falta construir una respuesta json que enviar al controlador
-
-        $response = $this->createOrderDetails($shop, $shopper, $cart, $lines);
-
-        return $response;
+        return $this->createOrderDetails($shop, $shopper, $cart, $lines);
 
     }
 
     public function createOrderDetails ($shop, $shopper, $cart, $lines){
         //En esta función creo un objeto json con los detalles que recibe el shopper
 
-        $orderlines = [];
+        $orderLines = [];
         foreach ($lines as $line){
             $lineDetail = [
-                'Producto' => $line->getProductId()->getName(),
-                'Cantidad' => $line->getQuantity(),
-                'Precio' => $line->getProductId()->getPrice()
+                'Product' => $line->getProduct()->getName(),
+                'Quantity' => $line->getQuantity(),
+                'Price' => $line->getProduct()->getPrice()
             ];
-            $orderlines[] = $lineDetail;
+            $orderLines[] = $lineDetail;
         }
 
         $orderDetails = [
@@ -112,13 +97,13 @@ class ShopperService
                 'id' => $shop->getId(),
                 'name' => $shop->getName()
             ],
-            'order' => $orderlines,
+            'order' => $orderLines,
             'total' => $cart->getTotal(),
             'delivery' => [
                 'deliveryDate' => $cart->getDeliveryDate(),
                 'deliveryStart' => $cart->getDeliveryStart(),
                 'deliveryEnd' => $cart->getDeliveryEnd(),
-                'Address' => $cart->getAddressId()->getAddress()
+                'Address' => $cart->getAddress()->getAddress()
             ]
         ];
 

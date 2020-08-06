@@ -76,7 +76,7 @@ class Shopper
         return $this;
     }
 
-    public function getShopId(): ?Shop
+    public function getShop(): ?Shop
     {
         return $this->shop;
     }
@@ -85,7 +85,7 @@ class Shopper
      * @param Shop $shop
      * @return $this
      */
-    public function setShopId($shop): self
+    public function setShop($shop): self
     {
         $this->shop = $shop;
 
@@ -104,7 +104,7 @@ class Shopper
     {
         if (!$this->carts->contains($cart)) {
             $this->carts[] = $cart;
-            $cart->setShopperId($this);
+            $cart->setShopper($this);
         }
 
         return $this;
@@ -115,8 +115,8 @@ class Shopper
         if ($this->carts->contains($cart)) {
             $this->carts->removeElement($cart);
             // set the owning side to null (unless already changed)
-            if ($cart->getShopperId() === $this) {
-                $cart->setShopperId(null);
+            if ($cart->getShopper() === $this) {
+                $cart->setShopper(null);
             }
         }
 
